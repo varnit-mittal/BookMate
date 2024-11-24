@@ -34,8 +34,9 @@ public class SchoolService {
         return studentDAO.read(id);
     }
 
-    public List<Student> getAllStudents() throws SQLException {
-        return studentDAO.mapResultSetToList(rs);
+    public void getAllStudents() throws SQLException {
+        List<Student> st = studentDAO.mapResultSetToList(rs);
+        st.forEach(student -> System.out.println(student));
     }
 
     public void updateStudent(Student student) throws SQLException {
@@ -58,8 +59,9 @@ public class SchoolService {
         return teacherDAO.read(id);
     }
 
-    public List<Teacher> getAllTeachers() throws SQLException {
-        return teacherDAO.mapResultSetToList(rs);
+    public void getAllTeachers() throws SQLException {
+        List<Teacher> t =  teacherDAO.mapResultSetToList(rs);
+        t.forEach(teacher -> System.out.println(teacher));
     }
 
     public void updateTeacher(Teacher teacher) throws SQLException {
@@ -82,8 +84,9 @@ public class SchoolService {
         return courseDAO.read(id);
     }
 
-    public List<Course> getAllCourses() throws SQLException {
-        return courseDAO.mapResultSetToList(rs);
+    public void getAllCourses() throws SQLException {
+        List<Course> cs = courseDAO.mapResultSetToList(rs);
+        cs.forEach(course -> System.out.println(course));
     }
 
     public void updateCourse(Course course) throws SQLException {
@@ -97,17 +100,18 @@ public class SchoolService {
     }
 
     // Library and Book Management Methods
-    public void addBookToLibrary(Book book) throws SQLException {
+    public void addBook(Book book) throws SQLException {
         bookDAO.create(book);
-        System.out.println("Book added: " + book.getTitle());
+        System.out.println(book);
     }
 
     public Book getBookById(int id) throws SQLException {
         return bookDAO.read(id);
     }
 
-    public List<Book> getAllBooks() throws SQLException {
-        return bookDAO.mapResultSetToList(rs);
+    public void getAllBooks() throws SQLException {
+        List<Book>  b= bookDAO.mapResultSetToList(rs);
+        b.forEach(book -> System.out.println(book));
     }
 
     public void updateBook(Book book) throws SQLException {
@@ -122,7 +126,7 @@ public class SchoolService {
 
     public void addLibrary(Library library) throws SQLException {
         libraryDAO.create(library);
-        System.out.println("Library added: " + library.getName());
+        System.out.println(library);
     }
 
     public Library getLibraryById(int id) throws SQLException {
@@ -139,18 +143,47 @@ public class SchoolService {
         System.out.println("Library deleted with ID: " + id);
     }
 
-    // Utility Method for Displaying All Entities
-    public void displayAllEntities() throws SQLException {
-        System.out.println("\nAll Students:");
-        getAllStudents().forEach(student -> System.out.println(student.getName()));
+    public void updateCGPA(int studentId, float newCGPA) {
+        studentDAO.updateCGPA(studentId, newCGPA);
+    }
 
-        System.out.println("\nAll Teachers:");
-        getAllTeachers().forEach(teacher -> System.out.println(teacher.getName()));
+    public void incrementSalary(int teacherId, float incrementAmount) {
+        teacherDAO.incrementSalary(teacherId, incrementAmount);
+    }
 
-        System.out.println("\nAll Courses:");
-        getAllCourses().forEach(course -> System.out.println(course.getCourseName()));
+    public void markBookWithCourse(int bookId, int courseId) {
+        bookDAO.markBookWithCourse(bookId, courseId);
+    }
 
-        System.out.println("\nAll Books:");
-        getAllBooks().forEach(book -> System.out.println(book.getTitle()));
+    public void getTopper() {
+        Student st = studentDAO.getTopper();
+        System.out.println(st);
+    }
+
+    public void getHighestPaidTeacher() {
+        Teacher th = teacherDAO.getHighestPaidTeacher();
+        System.out.println(th);
+    }
+
+    public void getCourseBooks(int courseId) {
+        List<Book> books = bookDAO.getBooksForCourse(courseId);
+        books.forEach(book -> System.out.println(book));
+    }
+
+    public void unmarkBookWithCourse(int bookId, int courseId) {
+        bookDAO.unmarkBookWithCourse(bookId, courseId);
+    }
+
+    public void addStudentToCourse(int studentId, int courseId) {
+        studentDAO.addStudentToCourse(studentId, courseId);
+    }
+
+    public void removeStudentFromCourse(int studentId, int courseId) {
+        studentDAO.removeStudentFromCourse(studentId, courseId);
+    }
+
+    public void getStudentbooks(int studentId) {
+        List<Book> books = studentDAO.getBooksforStudents(studentId);
+        books.forEach(book -> System.out.println(book));
     }
 }

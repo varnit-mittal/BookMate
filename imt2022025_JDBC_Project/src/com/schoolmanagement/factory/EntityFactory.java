@@ -16,7 +16,7 @@ public class EntityFactory {
             case "Book":
                 return new Book(0, "", "", "", 0); // Creating a default book instance
             case "Library":
-                return new Library(0, "", null); // Creating a default library instance
+                return new Library(0, ""); // Creating a default library instance
             default:
                 throw new IllegalArgumentException("Unknown entity type: " + entityType);
         }
@@ -34,7 +34,7 @@ public class EntityFactory {
             case BOOK:
                 return new Book(0, "", "", "", 0);
             case LIBRARY:
-                return new Library(0, "", null);
+                return new Library(0, "");
             default:
                 throw new IllegalArgumentException("Unknown entity type: " + entityType);
         }

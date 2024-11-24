@@ -1,6 +1,7 @@
 package com.schoolmanagement.dao;
 
-import com.schoolmanagement.models.Student;
+
+import com.schoolmanagement.models.*;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -60,7 +61,7 @@ public class StudentDAO extends BaseDAO<Student> {
 
     @Override
     public List<Student> mapResultSetToList(ResultSet rs) throws SQLException {
-        String queString = "SELECT * FROM Students";
+        String queString = "SELECT * FROM students";
         rs = connection.prepareStatement(queString).executeQuery();
         List<Student> students = new ArrayList<>();
         while (rs.next()) {
@@ -68,4 +69,70 @@ public class StudentDAO extends BaseDAO<Student> {
         }
         return students;
     }
+
+    public void updateCGPA(int studentId, float newCGPA) {
+        String query = "UPDATE students SET cgpa = ? WHERE id = ?";
+        try (PreparedStatement pstmt = connection.prepareStatement(query)) {
+            pstmt.setFloat(1, newCGPA);
+            pstmt.setInt(2, studentId);
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public Student getTopper() {
+        String query = "SELECT * FROM students ORDER BY cgpa DESC LIMIT 1";
+        try (Statement stmt = connection.createStatement();
+             ResultSet rs = stmt.executeQuery(query)) {
+            if (rs.next()) {
+                return new Student(rs.getInt("id"), rs.getString("roll_number"),
+                    rs.getString("name"), rs.getString("dob"), rs.getString("address"),
+                    rs.getFloat("cgpa"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+    
+    public void addStudentToCourse(int studentId, int courseId) {
+        String query = "INSERT INTO enrollments (course_id, student_id) VALUES (?, ?);";
+        try (PreparedStatement pstmt = connection.prepareStatement(query)) {
+            pstmt.setInt(1, courseId);
+            pstmt.setInt(2, studentId);
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void removeStudentFromCourse(int studentId, int courseId) {
+        String query = "DELETE FROM enrollments WHERE course_id = ? AND student_id = ?";
+        try (PreparedStatement pstmt = connection.prepareStatement(query)) {
+            pstmt.setInt(1, courseId);
+            pstmt.setInt(2, studentId);
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public List<Book> getBooksforStudents(int studentId) {
+        String query = "SELECT * FROM books WHERE id IN (SELECT book_id FROM course_books WHERE course_id IN (SELECT course_id FROM enrollments WHERE student_id = ?))";
+        try (PreparedStatement pstmt = connection.prepareStatement(query)) {
+            pstmt.setInt(1, studentId);
+            try (ResultSet rs = pstmt.executeQuery()) {
+                List<Book> books = new ArrayList<>();
+                while (rs.next()) {
+                    books.add(new Book(rs.getInt("id"), rs.getString("book_id"), rs.getString("title"), rs.getString("author"), rs.getInt("library_id")));
+                }
+                return books;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+    
 }

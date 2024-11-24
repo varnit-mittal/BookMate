@@ -35,7 +35,7 @@ public class LibraryDAO extends BaseDAO<Library> {
         try (PreparedStatement ps = createPreparedStatement(query, id); ResultSet rs = ps.executeQuery()) {
             if (rs.next()) {
                 // Fetch the library data
-                Library library = new Library(rs.getInt("id"), rs.getString("name"), new ArrayList<>());
+                Library library = new Library(rs.getInt("id"), rs.getString("name"));
                 
                 // Fetch the books for this library
                 String booksQuery = "SELECT * FROM books WHERE library_id = ?";
@@ -92,8 +92,7 @@ public class LibraryDAO extends BaseDAO<Library> {
     protected Library mapResultSetToEntity(ResultSet rs) throws SQLException {
         return new Library(
             rs.getInt("id"),
-            rs.getString("name"),
-            new ArrayList<>()
+            rs.getString("name")
         );
     }
 

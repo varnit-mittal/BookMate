@@ -60,10 +60,50 @@ public class BookDAO extends BaseDAO<Book> {
 
     @Override
     public List<Book> mapResultSetToList(ResultSet rs) throws SQLException {
+        rs = connection.createStatement().executeQuery("SELECT * FROM books");
         List<Book> books = new ArrayList<>();
         while (rs.next()) {
             books.add(mapResultSetToEntity(rs));
         }
         return books;
+    }
+
+    public void markBookWithCourse(int bookId, int courseId) {
+        String query = "INSERT INTO course_books (course_id, book_id) VALUES (?, ?);";
+        try (PreparedStatement pstmt = connection.prepareStatement(query)) {
+            pstmt.setInt(1, courseId);
+            pstmt.setInt(2, bookId);
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    
+    public void unmarkBookWithCourse(int bookId, int courseId) {
+        String query = "DELETE FROM course_books WHERE course_id = ? AND book_id = ?;";
+        try (PreparedStatement pstmt = connection.prepareStatement(query)) {
+            pstmt.setInt(1, courseId);
+            pstmt.setInt(2, bookId);
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public List<Book> getBooksForCourse(int courseId) {
+        String query = "SELECT * FROM books WHERE id IN (SELECT book_id FROM course_books WHERE course_id = ?)";
+        try (PreparedStatement pstmt = connection.prepareStatement(query)) {
+            pstmt.setInt(1, courseId);
+            try (ResultSet rs = pstmt.executeQuery()) {
+                List<Book> books = new ArrayList<>();
+                while (rs.next()) {
+                    books.add(new Book(rs.getInt("id"), rs.getString("book_id"), rs.getString("title"), rs.getString("author"), rs.getInt("library_id")));
+                }
+                return books;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }

@@ -60,10 +60,38 @@ public class TeacherDAO extends BaseDAO<Teacher> {
 
     @Override
     public List<Teacher> mapResultSetToList(ResultSet rs) throws SQLException {
+        rs = connection.createStatement().executeQuery("SELECT * FROM teachers");
         List<Teacher> teachers = new ArrayList<>();
         while (rs.next()) {
             teachers.add(mapResultSetToEntity(rs));
         }
         return teachers;
     }
+
+    public void incrementSalary(int teacherId, float incrementAmount) {
+        String query = "UPDATE teachers SET salary = salary + ? WHERE id = ?";
+        try (PreparedStatement pstmt = connection.prepareStatement(query)) {
+            pstmt.setFloat(1, incrementAmount);
+            pstmt.setInt(2, teacherId);
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    
+    public Teacher getHighestPaidTeacher() {
+        String query = "SELECT * FROM teachers ORDER BY salary DESC LIMIT 1";
+        try (Statement stmt = connection.createStatement();
+             ResultSet rs = stmt.executeQuery(query)) {
+            if (rs.next()) {
+                return new Teacher(rs.getInt("id"), rs.getString("emp_id"),
+                    rs.getString("name"), rs.getString("dob"), rs.getString("address"),
+                    rs.getFloat("salary"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+    
 }

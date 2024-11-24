@@ -58,6 +58,7 @@ public class CourseDAO extends BaseDAO<Course> {
 
     @Override
     public List<Course> mapResultSetToList(ResultSet rs) throws SQLException {
+        rs = connection.createStatement().executeQuery("SELECT * FROM courses");
         List<Course> courses = new ArrayList<>();
         while (rs.next()) {
             courses.add(mapResultSetToEntity(rs));

@@ -7,10 +7,9 @@ public class Library {
     private String name;
     private List<Book> books;  // One-to-many relationship with Book
 
-    public Library(int id, String name, List<Book> books) {
+    public Library(int id, String name) {
         this.id = id;
         this.name = name;
-        this.books = books;
     }
 
     // Getters and Setters
