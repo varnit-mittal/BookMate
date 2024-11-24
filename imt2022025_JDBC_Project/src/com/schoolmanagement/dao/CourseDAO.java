@@ -30,10 +30,10 @@ public class CourseDAO extends BaseDAO<Course> {
         return null;
     }
 
-    @Override
-    public void update(Course course) throws SQLException {
-        String query = "UPDATE courses SET course_code = ?, course_name = ?, course_description = ? WHERE course_id = ?";
-        try (PreparedStatement ps = createPreparedStatement(query, course.getCourseCode(), course.getCourseName(), course.getCourseDescription(), course.getCourseId())) {
+
+    public void update(String courseCode, String courseName, String courseDescription) throws SQLException {
+        String query = "UPDATE courses SET course_name = ?, course_description = ? WHERE course_code = ?";
+        try (PreparedStatement ps = createPreparedStatement(query, courseName, courseDescription, courseCode)) {
             ps.executeUpdate();
         }
     }

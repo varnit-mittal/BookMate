@@ -31,10 +31,9 @@ public class StudentDAO extends BaseDAO<Student> {
         return null;
     }
 
-    @Override
-    public void update(Student student) throws SQLException {
-        String query = "UPDATE students SET roll_number = ?, name = ?, dob = ?, address = ?, cgpa = ? WHERE id = ?";
-        try (PreparedStatement ps = createPreparedStatement(query, student.getRollNumber(), student.getName(), student.getDob(), student.getAddress(), student.getCgpa(), student.getId())) {
+    public void update(String rn, String address) throws SQLException {
+        String query = "UPDATE students SET address = ? WHERE roll_number = ?";
+        try (PreparedStatement ps = createPreparedStatement(query, address, rn)) {
             ps.executeUpdate();
         }
     }

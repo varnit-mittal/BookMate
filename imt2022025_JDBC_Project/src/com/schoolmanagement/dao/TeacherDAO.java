@@ -30,10 +30,9 @@ public class TeacherDAO extends BaseDAO<Teacher> {
         return null;
     }
 
-    @Override
-    public void update(Teacher teacher) throws SQLException {
-        String query = "UPDATE teachers SET emp_id = ?, name = ?, dob = ?, address = ?, salary = ? WHERE id = ?";
-        try (PreparedStatement ps = createPreparedStatement(query, teacher.getEmpId(), teacher.getName(), teacher.getDob(), teacher.getAddress(), teacher.getSalary(), teacher.getId())) {
+    public void update(String ad, String emp) throws SQLException {
+        String query = "UPDATE teachers SET address = ? WHERE emp_id = ?";
+        try (PreparedStatement ps = createPreparedStatement(query, ad, emp)) {
             ps.executeUpdate();
         }
     }

@@ -19,14 +19,6 @@ public class LibraryDAO extends BaseDAO<Library> {
         try (PreparedStatement ps = createPreparedStatement(query, library.getId(), library.getName())) {
             ps.executeUpdate();
         }
-
-        // Insert books for the library
-        for (Book book : library.getBooks()) {
-            String bookQuery = "INSERT INTO books (id, book_id, title, author, library_id) VALUES (?, ?, ?, ?, ?)";
-            try (PreparedStatement psBook = createPreparedStatement(bookQuery, book.getId(), book.getBookId(), book.getTitle(), book.getAuthor(), library.getId())) {
-                psBook.executeUpdate();
-            }
-        }
     }
 
     @Override
@@ -48,7 +40,6 @@ public class LibraryDAO extends BaseDAO<Library> {
                             bookRs.getString("author"),
                             bookRs.getInt("library_id")
                         );
-                        library.addBook(book);
                     }
                 }
                 return library;
@@ -57,19 +48,10 @@ public class LibraryDAO extends BaseDAO<Library> {
         return null;
     }
 
-    @Override
-    public void update(Library library) throws SQLException {
+    public void update(String library, int id) throws SQLException {
         String query = "UPDATE libraries SET name = ? WHERE id = ?";
-        try (PreparedStatement ps = createPreparedStatement(query, library.getName(), library.getId())) {
+        try (PreparedStatement ps = createPreparedStatement(query, library, id)) {
             ps.executeUpdate();
-        }
-
-        // Update books
-        for (Book book : library.getBooks()) {
-            String bookQuery = "UPDATE books SET title = ?, author = ? WHERE id = ?";
-            try (PreparedStatement psBook = createPreparedStatement(bookQuery, book.getTitle(), book.getAuthor(), book.getId())) {
-                psBook.executeUpdate();
-            }
         }
     }
 

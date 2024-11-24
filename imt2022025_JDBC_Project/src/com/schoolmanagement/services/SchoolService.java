@@ -30,8 +30,9 @@ public class SchoolService {
         System.out.println("Student added: " + student.getName());
     }
 
-    public Student getStudentById(int id) throws SQLException {
-        return studentDAO.read(id);
+    public void getStudentById(int id) throws SQLException {
+        Student st = studentDAO.read(id);
+        System.out.println(st);
     }
 
     public void getAllStudents() throws SQLException {
@@ -39,9 +40,9 @@ public class SchoolService {
         st.forEach(student -> System.out.println(student));
     }
 
-    public void updateStudent(Student student) throws SQLException {
-        studentDAO.update(student);
-        System.out.println("Student updated: " + student.getName());
+    public void updateStudent(String rn, String address) throws SQLException {
+        studentDAO.update(rn, address);
+        System.out.println("Student Address Updated");
     }
 
     public void deleteStudent(int id) throws SQLException {
@@ -55,8 +56,9 @@ public class SchoolService {
         System.out.println("Teacher added: " + teacher.getName());
     }
 
-    public Teacher getTeacherById(int id) throws SQLException {
-        return teacherDAO.read(id);
+    public void getTeacherById(int id) throws SQLException {
+        Teacher th = teacherDAO.read(id);
+        System.out.println(th);
     }
 
     public void getAllTeachers() throws SQLException {
@@ -64,9 +66,9 @@ public class SchoolService {
         t.forEach(teacher -> System.out.println(teacher));
     }
 
-    public void updateTeacher(Teacher teacher) throws SQLException {
-        teacherDAO.update(teacher);
-        System.out.println("Teacher updated: " + teacher.getName());
+    public void updateTeacher(String add, String emp) throws SQLException {
+        teacherDAO.update(add, emp);
+        System.out.println("Teacher updated");
     }
 
     public void deleteTeacher(int id) throws SQLException {
@@ -80,8 +82,9 @@ public class SchoolService {
         System.out.println("Course added: " + course.getCourseName());
     }
 
-    public Course getCourseById(int id) throws SQLException {
-        return courseDAO.read(id);
+    public void getCourseById(int id) throws SQLException {
+        Course cs = courseDAO.read(id);
+        System.out.println(cs);
     }
 
     public void getAllCourses() throws SQLException {
@@ -89,9 +92,9 @@ public class SchoolService {
         cs.forEach(course -> System.out.println(course));
     }
 
-    public void updateCourse(Course course) throws SQLException {
-        courseDAO.update(course);
-        System.out.println("Course updated: " + course.getCourseName());
+    public void updateCourse(String code, String name, String desc) throws SQLException {
+        courseDAO.update(code, name, desc);
+        System.out.println("Course updated");
     }
 
     public void deleteCourse(int id) throws SQLException {
@@ -105,8 +108,9 @@ public class SchoolService {
         System.out.println(book);
     }
 
-    public Book getBookById(int id) throws SQLException {
-        return bookDAO.read(id);
+    public void getBookById(int id) throws SQLException {
+        Book b = bookDAO.read(id);
+        System.out.println(b);
     }
 
     public void getAllBooks() throws SQLException {
@@ -114,9 +118,9 @@ public class SchoolService {
         b.forEach(book -> System.out.println(book));
     }
 
-    public void updateBook(Book book) throws SQLException {
-        bookDAO.update(book);
-        System.out.println("Book updated: " + book.getTitle());
+    public void updateBook(String title, String author, String id) throws SQLException {
+        bookDAO.update(title, id, author);
+        System.out.println("Book updated: " + title);
     }
 
     public void deleteBook(int id) throws SQLException {
@@ -129,13 +133,14 @@ public class SchoolService {
         System.out.println(library);
     }
 
-    public Library getLibraryById(int id) throws SQLException {
-        return libraryDAO.read(id);
+    public void getLibraryById(int id) throws SQLException {
+        Library lb = libraryDAO.read(id);
+        System.out.println(lb);
     }
 
-    public void updateLibrary(Library library) throws SQLException {
-        libraryDAO.update(library);
-        System.out.println("Library updated: " + library.getName());
+    public void updateLibrary(String name, int id) throws SQLException {
+        libraryDAO.update(name , id);
+        System.out.println("Library updated: " + name);
     }
 
     public void deleteLibrary(int id) throws SQLException {

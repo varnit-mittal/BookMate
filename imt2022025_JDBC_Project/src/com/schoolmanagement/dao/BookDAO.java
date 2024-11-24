@@ -31,10 +31,9 @@ public class BookDAO extends BaseDAO<Book> {
         return null;
     }
 
-    @Override
-    public void update(Book book) throws SQLException {
-        String query = "UPDATE books SET title = ?, author = ?, library_id = ? WHERE id = ?";
-        try (PreparedStatement ps = createPreparedStatement(query, book.getTitle(), book.getAuthor(), book.getLibraryId(), book.getId())) {
+    public void update(String title, String Bookid, String author) throws SQLException {
+        String query = "UPDATE books SET title = ?, author = ? WHERE  book_id = ?";
+        try (PreparedStatement ps = createPreparedStatement(query, title, author, Bookid)) {
             ps.executeUpdate();
         }
     }

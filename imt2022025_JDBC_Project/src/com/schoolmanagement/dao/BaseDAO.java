@@ -16,8 +16,6 @@ public abstract class BaseDAO<T> {
 
     public abstract T read(int id) throws SQLException;
 
-    public abstract void update(T obj) throws SQLException;
-
     public abstract void delete(int id) throws SQLException;
 
     // Helper method to close PreparedStatement and ResultSet resources
