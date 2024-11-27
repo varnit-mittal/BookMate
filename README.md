@@ -66,4 +66,4 @@ If you would like to contribute, feel free to fork the repository and submit a p
    
 ## License
 
-[MIT](https://choosealicense.com/licenses/mit/)
+[MIT](https://github.com/varnit-mittal/JDBC-MINI-Proj/blob/main/LICENSE)
