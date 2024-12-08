@@ -24,7 +24,7 @@ The **JDBC-MINI-PROJ** is a database-driven application designed to implement a 
 ### Installation Steps
 1. Clone the repository:
    ```bash
-   git clone https://github.com/your-username/JDBC-MINI-PROJ.git
+   git clone https://github.com/varnit-mittal/JDBC-MINI-Proj
    cd JDBC-MINI-PROJ/imt2022025_JDBC_Project
     ```
 ### Configure the Database:
