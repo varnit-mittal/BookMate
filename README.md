@@ -17,34 +17,50 @@ The **JDBC-MINI-PROJ** is a database-driven application designed to implement a 
 ## Installation
 
 ### Prerequisites
-1. Install **Java Development Kit (JDK)** version 8 or later.
-2. Install **Apache Maven** for dependency management.
-3. Set up a relational database like **MySQL** or **PostgreSQL**.
+- Install **Java Development Kit (JDK)** version 8 or later.
+- Set up a relational database like **MySQL** or **PostgreSQL**.
 
 ### Installation Steps
 1. Clone the repository:
    ```bash
    git clone https://github.com/varnit-mittal/JDBC-MINI-Proj
-   cd JDBC-MINI-PROJ/imt2022025_JDBC_Project
+   cd JDBC-MINI-Proj/imt2022025_JDBC_Project/
     ```
 ### Configure the Database:
 
-1. Execute the SQL scripts in the `sql/` folder:
+1. Configure SQL Server:
+```bash
+sudo mysql -u root
+SELECT User,Host FROM mysql.user;
+DROP USER 'root'@'localhost'; 
+INSTALL PLUGIN validate_password SONAME 'validate_password.so';
+SET GLOBAL validate_password_length = 5; 
+SET GLOBAL validate_password_number_count = 0; 
+SET GLOBAL validate_password_mixed_case_count = 0; 
+SET GLOBAL validate_password_special_char_count = 0; 
+SET GLOBAL validate_password_policy = LOW;
+CREATE USER 'root'@'%' IDENTIFIED BY 'admin';
+GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' WITH GRANT OPTION; 
+```
+
+2. Execute the SQL scripts in the `sql/` folder:
    ```bash
-   mysql -u your-username -p your-database < sql/schema.sql
-   mysql -u your-username -p your-database < sql/insert.sql
+   mysql -u root -p
+   admin
+   SOURCE /path to schem.sql in sql/ folder of the project 
    ```
-2. Update the database credentials in DatabaseManager.java:
+3. Run the application locally
    ```bash
-   private static final String URL = "jdbc:mysql://localhost:3306/your-database";
-   private static final String USER = "your-username";
-   private static final String PASSWORD = "your-password";
+   export CLASSPATH=$CLASSPATH:./mysql-connector-j-8.3.0.jar:./junit-jupiter-engine-5.9.3.jar:./junit-jupiter-api-5.9.3.jar
+   javac -classpath "./apiguardian-api-1.1.2.jar:./junit-jupiter-api-5.9.3.jar:./junit-jupiter-engine-5.9.3.jar:./junit-platform-console-standalone-1.11.3.jar:./mysql-connector-j-8.3.0.jar" -d . src/com/schoolmanagement/**/*.java
+   java com.schoolmanagement.main.Main
    ```
-3. Install and run the application
-   ```bash
-   mvn clean install
-   java -cp target/jdbc-mini-proj.jar com.schoolmanagement.main.Main
-   ```
+4. To test the application using junit
+```bash
+export CLASSPATH=$CLASSPATH:./mysql-connector-j-8.3.0.jar:./junit-jupiter-engine-5.9.3.jar:./junit-jupiter-api-5.9.3.jar
+javac -classpath "./apiguardian-api-1.1.2.jar:./junit-jupiter-api-5.9.3.jar:./junit-jupiter-engine-5.9.3.jar:./junit-platform-console-standalone-1.11.3.jar:./mysql-connector-j-8.3.0.jar" -d . src/com/schoolmanagement/**/*.java
+java -jar ./junit-platform-console-standalone-1.11.3.jar -cp .:./mysql-connector-j-8.3.0.jar --scan-class-path
+```
 
 ## Contributors
 
