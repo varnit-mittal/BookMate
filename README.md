@@ -1,7 +1,7 @@
-# BookMate
+# SchoolManager
 
 ## Overview
-**BookMate** is a database-driven application designed to implement a School Management System using **Java** and **JDBC**. It follows a **layered architecture**, ensuring separation of concerns and maintainability. The system includes modules for managing students, teachers, courses, and libraries, alongside database operations.
+**SchoolManager** is a database-driven application designed to implement a School Management System using **Java** and **JDBC**. It follows a **layered architecture**, ensuring separation of concerns and maintainability. The system includes modules for managing students, teachers, courses, and libraries, alongside database operations.
 
 ---
 
