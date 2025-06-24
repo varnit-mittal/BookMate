@@ -23,8 +23,8 @@
 ### Installation Steps
 1. Clone the repository:
    ```bash
-   git clone https://github.com/varnit-mittal/JDBC-MINI-Proj
-   cd JDBC-MINI-Proj/imt2022025_JDBC_Project/
+   git clone https://github.com/varnit-mittal/SchoolManager
+   cd SchoolManager/imt2022025_JDBC_Project/
     ```
 ### Configure the Database:
 
